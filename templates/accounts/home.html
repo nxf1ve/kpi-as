@@ -9,9 +9,15 @@
     расчёт итоговых баллов и подготовка отчётов по сотрудникам и подразделениям.
   </p>
   <div class="cta-row">
-    <a class="btn" href="{% url 'accounts:cabinet-admin' %}">Кабинет администратора</a>
-    <a class="btn btn-secondary" href="{% url 'accounts:cabinet-manager' %}">Кабинет руководителя</a>
-    <a class="btn btn-secondary" href="{% url 'accounts:cabinet-employee' %}">Кабинет сотрудника</a>
+    {% if user.is_authenticated %}
+      <a class="btn" href="{% url 'accounts:cabinet' %}">Перейти в кабинет</a>
+      <form method="post" action="{% url 'accounts:logout' %}" class="inline-form">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-secondary">Выйти</button>
+      </form>
+    {% else %}
+      <a class="btn" href="{% url 'accounts:login' %}">Войти в систему</a>
+    {% endif %}
   </div>
 </section>
 

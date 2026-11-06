@@ -4,7 +4,10 @@
 <section class="page-head">
   <p class="eyebrow">Роль · {{ role_label }}</p>
   <h1>{{ page_title }}</h1>
-  <p class="lead">Разделы кабинета. Функции будут доступны по мере подключения модулей.</p>
+  <p class="lead">
+    Добро пожаловать{% if user.get_full_name %}, {{ user.get_full_name }}{% elif user.username %}, {{ user.username }}{% endif %}.
+    Разделы кабинета доступны в меню.
+  </p>
 </section>
 
 <section class="panel">

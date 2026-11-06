@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="auth-layout">
+  <div class="panel auth-panel">
+    <p class="eyebrow">Доступ</p>
+    <h1>Вход в систему</h1>
+    <p class="lead">Укажите логин и пароль учётной записи.</p>
+
+    <form method="post" action="{% url 'accounts:login' %}" class="auth-form" novalidate>
+      {% csrf_token %}
+      {% if next %}
+        <input type="hidden" name="next" value="{{ next }}">
+      {% endif %}
+
+      {% if form.non_field_errors %}
+        <div class="form-errors" role="alert">
+          {% for error in form.non_field_errors %}
+            <p>{{ error }}</p>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      <label class="field">
+        <span>{{ form.username.label }}</span>
+        {{ form.username }}
+        {% if form.username.errors %}
+          <span class="field-error">{{ form.username.errors.0 }}</span>
+        {% endif %}
+      </label>
+
+      <label class="field">
+        <span>{{ form.password.label }}</span>
+        {{ form.password }}
+        {% if form.password.errors %}
+          <span class="field-error">{{ form.password.errors.0 }}</span>
+        {% endif %}
+      </label>
+
+      <button type="submit" class="btn">Войти</button>
+    </form>
+
+    <p class="auth-switch">
+      Нет аккаунта?
+      <a href="{% url 'accounts:register' %}">Зарегистрироваться</a>
+    </p>
+  </div>
+</section>
+{% endblock %}
+

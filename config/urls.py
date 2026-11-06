@@ -10,3 +10,5 @@ urlpatterns = [
     path('reports/', include('reports.urls')),
     path('api/', include('config.api_urls')),
 ]
+
+handler403 = 'accounts.views.permission_denied'

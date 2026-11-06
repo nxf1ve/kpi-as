@@ -5,7 +5,7 @@ from rest_framework.response import Response
 
 @api_view(['GET'])
 def stub(request):
-    return Response({'app': 'reports', 'stage': 0, 'detail': 'Заготовка. Отчёты — этап 5.'})
+    return Response({'app': 'reports', 'detail': 'Модуль отчётов.'})
 
 
 urlpatterns = [

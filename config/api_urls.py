@@ -1,19 +1,21 @@
-"""Корневые маршруты REST API (заготовки этапа 0)."""
+"""Корневые маршруты REST API."""
 
 from django.urls import include, path
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
 
 @api_view(['GET'])
+@permission_classes([AllowAny])
 def api_root(request):
     return Response(
         {
             'name': 'Расчет KPI',
-            'stage': 0,
             'endpoints': {
                 'health': '/api/health/',
                 'accounts': '/api/accounts/',
+                'accounts_me': '/api/accounts/me/',
                 'org': '/api/org/',
                 'kpi': '/api/kpi/',
                 'calculation': '/api/calculation/',
@@ -24,6 +26,7 @@ def api_root(request):
 
 
 @api_view(['GET'])
+@permission_classes([AllowAny])
 def health(request):
     return Response({'status': 'ok'})
 

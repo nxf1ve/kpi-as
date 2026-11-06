@@ -11,18 +11,38 @@
   <header class="site-header">
     <div class="wrap header-inner">
       <a class="brand" href="{% url 'accounts:home' %}">Расчет KPI</a>
-      <nav class="nav">
-        <a href="{% url 'accounts:cabinet-admin' %}">Администратор</a>
-        <a href="{% url 'accounts:cabinet-manager' %}">Руководитель</a>
-        <a href="{% url 'accounts:cabinet-employee' %}">Сотрудник</a>
-        <a href="{% url 'org:index' %}">Оргструктура</a>
-        <a href="{% url 'kpi:index' %}">KPI</a>
-        <a href="{% url 'calculation:index' %}">Расчёт</a>
-        <a href="{% url 'reports:index' %}">Отчёты</a>
-        <a href="/api/">API</a>
+      <nav class="nav" aria-label="Основная навигация">
+        {% for item in nav_items %}
+          <a href="{% url item.url_name %}">{{ item.label }}</a>
+        {% empty %}
+          {% if not user.is_authenticated %}
+            <a href="{% url 'accounts:login' %}">Вход</a>
+          {% endif %}
+        {% endfor %}
       </nav>
+      <div class="header-user">
+        {% if user.is_authenticated %}
+          <span class="user-chip">
+            {{ user.username }}{% if user_role_label %} · {{ user_role_label }}{% endif %}
+          </span>
+          <form method="post" action="{% url 'accounts:logout' %}" class="inline-form">
+            {% csrf_token %}
+            <button type="submit" class="link-btn">Выйти</button>
+          </form>
+        {% else %}
+          <a class="btn btn-compact" href="{% url 'accounts:login' %}">Войти</a>
+        {% endif %}
+      </div>
     </div>
   </header>
+
+  {% if messages %}
+    <div class="wrap messages" role="status">
+      {% for message in messages %}
+        <p class="flash flash-{{ message.tags|default:'info' }}">{{ message }}</p>
+      {% endfor %}
+    </div>
+  {% endif %}
 
   <main class="wrap main">
     {% block content %}{% endblock %}

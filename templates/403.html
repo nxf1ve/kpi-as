@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="page-head">
+  <p class="eyebrow">Ошибка доступа</p>
+  <h1>Недостаточно прав</h1>
+  <p class="lead">
+    Этот раздел недоступен для вашей роли.
+    {% if user.is_authenticated %}
+      Перейдите в свой кабинет или выберите пункт из меню.
+    {% else %}
+      Войдите в систему под подходящей учётной записью.
+    {% endif %}
+  </p>
+  <div class="cta-row">
+    {% if user.is_authenticated %}
+      <a class="btn" href="{% url 'accounts:cabinet' %}">В кабинет</a>
+    {% else %}
+      <a class="btn" href="{% url 'accounts:login' %}">Войти</a>
+    {% endif %}
+    <a class="btn btn-secondary" href="{% url 'accounts:home' %}">На главную</a>
+  </div>
+</section>
+{% endblock %}

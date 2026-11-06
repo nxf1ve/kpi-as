@@ -78,10 +78,11 @@ docker compose up -d
 USE_SQLITE=1
 ```
 
-### 4. Миграции и сервер
+### 4. Миграции, демо-пользователи и сервер
 
 ```powershell
 .\.venv\Scripts\python manage.py migrate
+.\.venv\Scripts\python manage.py seed_demo_users
 .\.venv\Scripts\python manage.py runserver
 ```
 
@@ -101,20 +102,52 @@ cd c:\Study\SII\kpi-as
 
 ---
 
+## Демо-доступ (этап 1)
+
+Три учётные записи — по одной на каждую роль. Вход: http://127.0.0.1:8000/login/
+
+| Роль | Логин | Пароль | ФИО | Email |
+|------|-------|--------|-----|-------|
+| Администратор | `admin` | `admin123` | Анна Админова | admin@kpi.local |
+| Руководитель | `manager` | `manager123` | Михаил Руководов | manager@kpi.local |
+| Сотрудник | `employee` | `employee123` | Елена Сотрудникова | employee@kpi.local |
+
+После входа открывается кабинет своей роли. Чужие кабинеты и модули недоступны (403).
+
+Пересоздать демо-учётки (пароли сбрасываются):
+
+```powershell
+.\.venv\Scripts\python manage.py seed_demo_users
+```
+
+Если меняли модель пользователя и миграции конфликтуют со старой схемой:
+
+```powershell
+.\.venv\Scripts\python scripts\reset_schema.py
+.\.venv\Scripts\python manage.py migrate
+.\.venv\Scripts\python manage.py seed_demo_users
+```
+
+---
+
 ## Полезные URL
 
 | URL | Назначение |
 |-----|------------|
 | http://127.0.0.1:8000/ | Главная |
+| http://127.0.0.1:8000/login/ | Вход |
+| http://127.0.0.1:8000/register/ | Регистрация (роль сотрудника) |
+| http://127.0.0.1:8000/cabinet/ | Кабинет текущей роли |
 | http://127.0.0.1:8000/cabinet/admin/ | Кабинет администратора |
 | http://127.0.0.1:8000/cabinet/manager/ | Кабинет руководителя |
 | http://127.0.0.1:8000/cabinet/employee/ | Кабинет сотрудника |
-| http://127.0.0.1:8000/org/ | Модуль оргструктуры (заглушка) |
-| http://127.0.0.1:8000/kpi/ | Модуль KPI (заглушка) |
-| http://127.0.0.1:8000/calculation/ | Модуль расчёта (заглушка) |
-| http://127.0.0.1:8000/reports/ | Модуль отчётов (заглушка) |
+| http://127.0.0.1:8000/org/ | Оргструктура (руководитель) |
+| http://127.0.0.1:8000/kpi/ | KPI (руководитель) |
+| http://127.0.0.1:8000/calculation/ | Расчёт (руководитель) |
+| http://127.0.0.1:8000/reports/ | Отчёты (все роли) |
 | http://127.0.0.1:8000/api/ | Корень REST API |
 | http://127.0.0.1:8000/api/health/ | Health-check |
+| http://127.0.0.1:8000/api/accounts/me/ | Текущий пользователь (после входа) |
 | http://127.0.0.1:8000/admin/ | Django Admin |
 
 ---
@@ -124,14 +157,14 @@ cd c:\Study\SII\kpi-as
 ```
 kpi-as/
 ├── config/           # настройки Django, URL, API root
-├── accounts/         # доступ, кабинеты ролей
+├── accounts/         # доступ, роли, кабинеты
 ├── org/              # сотрудники и подразделения
 ├── kpi/              # показатели, матрица, периоды
 ├── calculation/      # расчёт KPI
 ├── reports/          # отчёты и аналитика
 ├── templates/        # HTML (клиент)
 ├── static/           # CSS/JS (клиент)
-├── scripts/          # вспомогательные скрипты (init_db)
+├── scripts/          # init_db, reset_schema
 ├── manage.py
 ├── requirements.txt
 ├── docker-compose.yml
@@ -145,8 +178,8 @@ kpi-as/
 
 | Этап | Содержание | Статус |
 |------|------------|--------|
-| 0 | Каркас проекта, UI ролей, API-заглушки | ✅ |
-| 1 | Вход, роли, разграничение прав | ⏳ |
+| 0 | Каркас проекта, UI ролей, API-заготовки | ✅ |
+| 1 | Вход, роли, разграничение прав | ✅ |
 | 2 | Оргструктура | ⏳ |
 | 3 | Конфигурация KPI | ⏳ |
 | 4 | Ядро расчёта | ⏳ |
