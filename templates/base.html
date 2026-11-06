@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}{{ page_title|default:"Расчет KPI" }}{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'css/main.css' %}">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="{% url 'accounts:home' %}">Расчет KPI</a>
+      <nav class="nav">
+        <a href="{% url 'accounts:cabinet-admin' %}">Администратор</a>
+        <a href="{% url 'accounts:cabinet-manager' %}">Руководитель</a>
+        <a href="{% url 'accounts:cabinet-employee' %}">Сотрудник</a>
+        <a href="{% url 'org:index' %}">Оргструктура</a>
+        <a href="{% url 'kpi:index' %}">KPI</a>
+        <a href="{% url 'calculation:index' %}">Расчёт</a>
+        <a href="{% url 'reports:index' %}">Отчёты</a>
+        <a href="/api/">API</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap main">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      Расчет KPI
+    </div>
+  </footer>
+</body>
+</html>

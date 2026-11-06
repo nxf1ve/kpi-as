@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="hero">
+  <p class="eyebrow">Система оценки эффективности</p>
+  <h1>Расчет KPI</h1>
+  <p class="lead">
+    Формирование матриц показателей, ввод фактических значений,
+    расчёт итоговых баллов и подготовка отчётов по сотрудникам и подразделениям.
+  </p>
+  <div class="cta-row">
+    <a class="btn" href="{% url 'accounts:cabinet-admin' %}">Кабинет администратора</a>
+    <a class="btn btn-secondary" href="{% url 'accounts:cabinet-manager' %}">Кабинет руководителя</a>
+    <a class="btn btn-secondary" href="{% url 'accounts:cabinet-employee' %}">Кабинет сотрудника</a>
+  </div>
+</section>
+
+<section class="grid">
+  <article class="panel">
+    <h2>Возможности</h2>
+    <ul>
+      <li>Управление сотрудниками и подразделениями</li>
+      <li>Справочник KPI и матрицы показателей</li>
+      <li>Ввод фактов и расчёт эффективности</li>
+      <li>Отчёты и аналитика</li>
+      <li>Ролевой доступ и администрирование</li>
+    </ul>
+  </article>
+  <article class="panel">
+    <h2>Роли пользователей</h2>
+    <ul>
+      <li>Администратор — пользователи, настройки, аудит</li>
+      <li>Руководитель — KPI, факты, расчёт, отчёты</li>
+      <li>Сотрудник — просмотр собственных показателей</li>
+    </ul>
+  </article>
+</section>
+{% endblock %}

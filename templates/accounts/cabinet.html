@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="page-head">
+  <p class="eyebrow">Роль · {{ role_label }}</p>
+  <h1>{{ page_title }}</h1>
+  <p class="lead">Разделы кабинета. Функции будут доступны по мере подключения модулей.</p>
+</section>
+
+<section class="panel">
+  <h2>Разделы</h2>
+  <ul class="checklist">
+    {% for item in placeholders %}
+      <li>{{ item }}</li>
+    {% endfor %}
+  </ul>
+</section>
+{% endblock %}

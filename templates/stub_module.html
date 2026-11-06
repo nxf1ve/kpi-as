@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="page-head">
+  <p class="eyebrow">Раздел</p>
+  <h1>{{ page_title }}</h1>
+  <p class="lead">{{ module_hint }}</p>
+</section>
+
+<section class="panel">
+  <p>Раздел готовится к работе. Вернитесь на главную или выберите другой пункт меню.</p>
+  <p><a class="btn btn-secondary" href="{% url 'accounts:home' %}">На главную</a></p>
+</section>
+{% endblock %}

@@ -1,0 +1,20 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: kpi-as-db
+    environment:
+      POSTGRES_DB: kpi_as
+      POSTGRES_USER: kpi
+      POSTGRES_PASSWORD: kpi
+    ports:
+      - "5432:5432"
+    volumes:
+      - kpi_pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U kpi -d kpi_as"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  kpi_pg_data:
